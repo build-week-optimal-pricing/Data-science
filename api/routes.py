@@ -1,14 +1,25 @@
 #!/usr/bin/env python3
 
 import logging
-from flask import request, jsonify, render_template
+from flask import request, jsonify, render_template, send_from_directory
 import numpy as np
+from dash.dependencies import Input, Output
+import dash_html_components as html
+import dash_core_components as dcc
 
 from api import APP
 from api.service import location_service
 from api.service import price_service
 
+
 LOG = logging.getLogger("optimal-price")
+
+@APP.route("/plot/<route_name>", methods=["GET"])
+def get_plot(route_name):
+    LOG.info(f"visual_callback('{route_name}')")
+    if route_name == "map":
+        return send_from_directory("static", "map-plot.html")
+
 
 @APP.route("/lookup-neighborhood", methods=["GET", "POST"])
 def lookup_neighborhood():
@@ -33,6 +44,7 @@ def lookup_neighborhood():
     return jsonify({
         "neighborhood": result
     })
+
 
 @APP.route("/lookup-neighborhood-form")
 def lookup_neighborhood_form():
@@ -92,6 +104,8 @@ def estimate_price():
        "price": float(price)
     })
 
+
 @APP.route("/estimate-price-form")
 def estimate_price_form():
     return render_template("price-form.html")
+
