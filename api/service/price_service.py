@@ -46,19 +46,19 @@ def estimate(
         @type last_review: int
     """
 
-    if min_nights == np.nan:
+    if min_nights is np.nan:
         LOG.info("Warning: min_nights is nan")
 
-    if num_reviews == np.nan:
+    if num_reviews is np.nan:
         LOG.info("Warning: num_reviews is nan")
 
-    if listings_count == np.nan:
+    if listings_count is np.nan:
         LOG.info("Warning: listings_count is nan")
 
-    if availability_365 == np.nan:
+    if availability_365 is np.nan:
         LOG.info("Warning: availability_365 is nan")
 
-    if last_review == np.nan:
+    if last_review is np.nan:
         LOG.info("Warning: last_review is nan")
 
     df = pd.DataFrame({
@@ -66,7 +66,7 @@ def estimate(
         'room_type': [room_type],
         'minimum_nights': [min_nights],
         'number_of_reviews': [num_reviews],
-        'reviews_per_month': [num_reviews/3], # TODO 
+        'reviews_per_month': [np.nan], # TODO
         'calculated_host_listings_count': [listings_count],
         'availability_365': [availability_365],
         'last_review_seconds_ago': [last_review],

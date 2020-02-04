@@ -51,6 +51,8 @@ def estimate_price():
     else:
         data = request.get_json()
 
+    LOG.info(f"/estimate-price endpoint: got data: {data}")
+
     neighborhood = data["neighborhood"] 
     room_type = data["room_type"] 
     listings_count = (
