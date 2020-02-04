@@ -13,8 +13,8 @@ GET https://optimalprice.stromsy.com/lookup-neighborhood
   
 POST https://optimalprice.stromsy.com/estimate-price
   * expects form parameters:
-      * neighborhood: str
-      * room_type: str
+      * neighborhood: str, should be one of these values: ['Reinickendorf', 'Steglitz - Zehlendorf', 'Tempelhof - Schöneberg', 'Lichtenberg', 'Spandau', 'Charlottenburg-Wilm.', 'Friedrichshain-Kreuzberg', 'Pankow', 'Treptow - Köpenick', 'Mitte', 'Marzahn - Hellersdorf', 'Neukölln']
+      * room_type: str, should be one of these values: ['Entire home/apt', 'Private room', 'Shared room', 'Hotel room']
       * listings_count: int, total number of listings by the host
       * num_reviews: int, number of reviews on the listing
       * min_nights: int, minimum number of nights on the listing
