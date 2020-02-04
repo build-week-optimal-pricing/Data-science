@@ -32,7 +32,7 @@ def estimate(
        last_review=0,
 ):
     df = pd.DataFrame({
-        'neighbourhood': [neighborhood],
+        'neighbourhood_group': [neighborhood],
         'room_type': [room_type],
         'minimum_nights': [min_nights],
         'number_of_reviews': [num_reviews],
