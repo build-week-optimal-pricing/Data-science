@@ -17,8 +17,14 @@ LOG = logging.getLogger("optimal-price")
 @APP.route("/plot/<route_name>", methods=["GET"])
 def get_plot(route_name):
     LOG.info(f"visual_callback('{route_name}')")
+
     if route_name == "map":
         return send_from_directory("static", "map-plot.html")
+
+    if route_name == "scatter":
+        return send_from_directory("static", "scatter-plot.html")
+
+    LOG.info(f"unrecognized route: {route_name}")
 
 
 @APP.route("/lookup-neighborhood", methods=["GET", "POST"])
