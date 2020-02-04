@@ -2,6 +2,7 @@
 
 import logging
 from flask import request, jsonify, render_template
+import numpy as np
 
 from api import APP
 from api.service import location_service
@@ -40,15 +41,34 @@ def lookup_neighborhood_form():
 
 @APP.route("/estimate-price", methods=["POST"])
 def estimate_price():
-   neighborhood = request.form["neighborhood"] 
-   room_type = request.form["room_type"] 
-   listings_count = int(request.form["listings_count"])
-   num_reviews = int(request.form["num_reviews"])
-   min_nights = int(request.form["min_nights"])
-   availability_365 = int(request.form["availability"])
-   last_review_time = int(request.form["last_review_time"])
+    """
+        Endpoint for looking up price estimate given characteristics
+        of the listing.
+    """
+    neighborhood = request.form["neighborhood"] 
+    room_type = request.form["room_type"] 
+    listings_count = (
+       int(request.form["listings_count"])
+       if "listings_count" in request.form else np.nan
+    )
+    num_reviews = (
+       int(request.form["num_reviews"])
+       if "num_reviews" in request.form else np.nan
+    )
+    min_nights = (
+       int(request.form["min_nights"])
+       if "min_nights" in request.form else np.nan
+    )
+    availability_365 = (
+       int(request.form["availability"])
+       if "availability" in request.form else np.nan
+    )
+    last_review_time = (
+       int(request.form["last_review_time"])
+       if "last_review_time" in request.form else np.nan
+    )
 
-   price = price_service.estimate(
+    price = price_service.estimate(
        neighborhood=neighborhood,
        room_type=room_type,
        min_nights=min_nights,
@@ -58,7 +78,7 @@ def estimate_price():
        last_review=last_review_time,
     )
 
-   return jsonify({
+    return jsonify({
        "price": float(price)
     })
 

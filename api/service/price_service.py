@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import logging
 from io import BytesIO
 import tarfile
 import pickle
@@ -7,6 +8,8 @@ import numpy as np
 import pandas as pd
 import urllib.request
 
+
+LOG = logging.getLogger("optimal-price")
 
 def __loadModel():
     """
@@ -31,6 +34,33 @@ def estimate(
        availability_365=0,
        last_review=0,
 ):
+    """
+        Service for doing price estimate.
+
+        @type neighborhood: str
+        @type room_type: str
+        @type min_nights: int
+        @type num_reviews: int
+        @type listings_count: int
+        @type availability_365: int
+        @type last_review: int
+    """
+
+    if min_nights == np.nan:
+        LOG.info("Warning: min_nights is nan")
+
+    if num_reviews == np.nan:
+        LOG.info("Warning: num_reviews is nan")
+
+    if listings_count == np.nan:
+        LOG.info("Warning: listings_count is nan")
+
+    if availability_365 == np.nan:
+        LOG.info("Warning: availability_365 is nan")
+
+    if last_review == np.nan:
+        LOG.info("Warning: last_review is nan")
+
     df = pd.DataFrame({
         'neighbourhood_group': [neighborhood],
         'room_type': [room_type],
