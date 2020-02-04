@@ -45,28 +45,35 @@ def estimate_price():
         Endpoint for looking up price estimate given characteristics
         of the listing.
     """
-    neighborhood = request.form["neighborhood"] 
-    room_type = request.form["room_type"] 
+
+    if "neighborhood" in request.form and "room_type" in request.form:
+        data = request.form
+    else:
+        data = request.get_json()
+
+    neighborhood = data["neighborhood"] 
+    room_type = data["room_type"] 
     listings_count = (
-       int(request.form["listings_count"])
-       if "listings_count" in request.form else np.nan
+       int(data["listings_count"])
+       if "listings_count" in data else np.nan
     )
     num_reviews = (
-       int(request.form["num_reviews"])
-       if "num_reviews" in request.form else np.nan
+       int(data["num_reviews"])
+       if "num_reviews" in data else np.nan
     )
     min_nights = (
-       int(request.form["min_nights"])
-       if "min_nights" in request.form else np.nan
+       int(data["min_nights"])
+       if "min_nights" in data else np.nan
     )
     availability_365 = (
-       int(request.form["availability"])
-       if "availability" in request.form else np.nan
+       int(data["availability"])
+       if "availability" in data else np.nan
     )
     last_review_time = (
-       int(request.form["last_review_time"])
-       if "last_review_time" in request.form else np.nan
+       int(data["last_review_time"])
+       if "last_review_time" in data else np.nan
     )
+
 
     price = price_service.estimate(
        neighborhood=neighborhood,
@@ -77,6 +84,7 @@ def estimate_price():
        availability_365=availability_365,
        last_review=last_review_time,
     )
+
 
     return jsonify({
        "price": float(price)
