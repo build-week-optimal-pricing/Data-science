@@ -45,7 +45,7 @@ def load_figs():
         opacity=0.5,
         color_continuous_scale="Viridis",
         center={"lat": center_lat, "lon": center_lon},
-        zoom=10.5,
+        zoom=10,
         #hover_data=["price_str",],
         labels={"price": "Price (€)", "neighbourhood": "Neighborhood"},
         title="Price of AirBnB in Berlin by Neighborhood"
