@@ -18,7 +18,7 @@ DASH = Dash(
     external_stylesheets=[
         "/css/style.css",
     ],
-    url_base_pathname="/vis/",
+    url_base_pathname="/plot/",
 )
 DASH.layout = html.Div(
     [
