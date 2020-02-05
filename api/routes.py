@@ -7,24 +7,38 @@ from dash.dependencies import Input, Output
 import dash_html_components as html
 import dash_core_components as dcc
 
-from api import APP
+from api import APP, DASH
 from api.service import location_service
 from api.service import price_service
+from api.service import plot_service
 
 
 LOG = logging.getLogger("optimal-price")
 
-@APP.route("/plot/<route_name>", methods=["GET"])
-def get_plot(route_name):
-    LOG.info(f"visual_callback('{route_name}')")
 
-    if route_name == "map":
-        return send_from_directory("static", "map-plot.html")
+@DASH.callback(
+    Output("main-graph", "figure"),
+    [Input("url", "pathname"),],
+)
+def get_visualization(pathname):
+    LOG.info(f"get_visualization('{pathname}')")
 
-    if route_name == "scatter":
-        return send_from_directory("static", "scatter-plot.html")
+    path_components = pathname.split("/")
+    assert len(path_components) == 3
+    assert path_components[0] == ""
+    assert path_components[1] == "plot"
 
-    LOG.info(f"unrecognized route: {route_name}")
+    if path_components[-1] == "random":
+        return plot_service.random_plot()
+
+    if path_components[-1] == "map":
+        return plot_service.map_plot()
+
+    if path_components[-1] == "scatter":
+        return plot_service.scatter_plot()
+
+    # shouldn't get here
+    assert False
 
 
 @APP.route("/lookup-neighborhood", methods=["GET", "POST"])
@@ -110,8 +124,12 @@ def estimate_price():
        "price": float(price)
     })
 
-
 @APP.route("/estimate-price-form")
 def estimate_price_form():
     return render_template("price-form.html")
 
+
+@APP.route("/css/<filename>")
+def get_css(filename):
+    LOG.info(f"get_css('{filename}')")
+    return send_from_directory("../css", filename)

@@ -12,15 +12,23 @@ from dash import Dash
 
 APP = Flask(__name__)
 
-"""
 DASH = Dash(
     __name__,
     server=APP,
-    routes_pathname_prefix="/vis/",
+    external_stylesheets=[
+        "/css/style.css",
+    ],
+    url_base_pathname="/vis/",
 )
-DASH.layout = html.Div([], id="page-content")
-DASH.config.suppress_callback_exceptions = True
-"""
+DASH.layout = html.Div(
+    [
+        dcc.Location(id="url", refresh=False),
+        dcc.Graph(id="main-graph", style={"height": "100%", "width": "100%"}),
+    ],
+    id="page-content",
+    style={"height": "100%", "width": "100%"},
+)
+#DASH.config.suppress_callback_exceptions = True
 
 LOG = logging.getLogger("optimal-price")
 logging.basicConfig(level=logging.DEBUG)
