@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import datetime
+
 from api import DB
 
 class Listing(DB.Model):
@@ -15,3 +17,4 @@ class Listing(DB.Model):
     availability_365 = DB.Column(DB.Integer, nullable=True)
     last_review = DB.Column(DB.Integer, nullable=True)
     price = DB.Column(DB.Float, nullable=False)
+    time = DB.Column(DB.DateTime, nullable=False, default=datetime.datetime.utcnow)
