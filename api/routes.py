@@ -66,11 +66,6 @@ def lookup_neighborhood():
     })
 
 
-@APP.route("/lookup-neighborhood-form")
-def lookup_neighborhood_form():
-    return render_template("coords-form.html")
-
-
 @APP.route("/estimate-price", methods=["POST"])
 def estimate_price():
     """
@@ -89,25 +84,24 @@ def estimate_price():
     room_type = data["room_type"] 
     listings_count = (
        int(data["listings_count"])
-       if "listings_count" in data else np.nan
+       if "listings_count" in data and data["listings_count"] else np.nan
     )
     num_reviews = (
        int(data["num_reviews"])
-       if "num_reviews" in data else np.nan
+       if "num_reviews" in data and data["num_reviews"] else np.nan
     )
     min_nights = (
        int(data["min_nights"])
-       if "min_nights" in data else np.nan
+       if "min_nights" in data and data["min_nights"] else np.nan
     )
     availability_365 = (
        int(data["availability"])
-       if "availability" in data else np.nan
+       if "availability" in data and data["availability"] else np.nan
     )
     last_review_time = (
        int(data["last_review_time"])
-       if "last_review_time" in data else np.nan
+       if "last_review_time" in data and data["last_review_time"] else np.nan
     )
-
 
     price = price_service.estimate(
        neighborhood=neighborhood,
@@ -119,14 +113,18 @@ def estimate_price():
        last_review=last_review_time,
     )
 
-
     return jsonify({
        "price": float(price)
     })
 
+
 @APP.route("/estimate-price-form")
 def estimate_price_form():
     return render_template("price-form.html")
+
+@APP.route("/lookup-neighborhood-form")
+def lookup_neighborhood_form():
+    return render_template("coords-form.html")
 
 
 @APP.route("/css/<filename>")

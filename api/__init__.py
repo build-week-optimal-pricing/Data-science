@@ -9,9 +9,13 @@ import dash_core_components as dcc
 
 from flask import Flask 
 from dash import Dash
+from flask_sqlalchemy import SQLAlchemy
 
+# initialize flask app
 APP = Flask(__name__)
+APP.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///my_db.sqlite"
 
+# initialize dash, for visualizations
 DASH = Dash(
     __name__,
     server=APP,
@@ -28,8 +32,11 @@ DASH.layout = html.Div(
     id="page-content",
     style={"height": "100%", "width": "100%"},
 )
-#DASH.config.suppress_callback_exceptions = True
 
+# initialize db
+DB = SQLAlchemy(APP)
+
+# initialize logging
 LOG = logging.getLogger("optimal-price")
 logging.basicConfig(level=logging.DEBUG)
 

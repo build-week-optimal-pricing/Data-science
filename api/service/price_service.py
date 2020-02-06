@@ -8,6 +8,9 @@ import numpy as np
 import pandas as pd
 import urllib.request
 
+from api import DB
+from api.models.listing import Listing
+
 
 LOG = logging.getLogger("optimal-price")
 
@@ -73,4 +76,19 @@ def estimate(
     })
 
     pred = _model.predict(df)
+
+    listing = Listing(
+        neighborhood=neighborhood,
+        room_type=room_type,
+        min_nights=min_nights,
+        num_reviews=num_reviews,
+        listings_count=listings_count,
+        availability_365=availability_365,
+        last_review=last_review,
+        price=pred[0],
+    )
+
+    DB.session.add(listing)
+    DB.session.commit()
+
     return pred[0]
