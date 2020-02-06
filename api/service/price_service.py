@@ -47,6 +47,8 @@ def estimate(
         @type listings_count: int
         @type availability_365: int
         @type last_review: int
+
+        @rtype: float
     """
 
     if min_nights is np.nan:
@@ -76,6 +78,8 @@ def estimate(
     })
 
     pred = _model.predict(df)
+    # we don't want to recommend less than 5 (arbitrary)
+    price = float(pred[0]) if pred[0] > 5. else 5.
 
     listing = Listing(
         neighborhood=neighborhood,
@@ -85,10 +89,10 @@ def estimate(
         listings_count=listings_count if listings_count is not np.nan else None,
         availability_365=availability_365 if availability_365 is not np.nan else None,
         last_review=last_review if last_review is not np.nan else None,
-        price=float(pred[0]),
+        price=price,
     )
 
     DB.session.add(listing)
     DB.session.commit()
 
-    return pred[0]
+    return price
