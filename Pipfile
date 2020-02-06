@@ -17,8 +17,8 @@ python-dotenv = "*"
 category-encoders = "*"
 xgboost = "*"
 dash = "*"
-psycopg2 = "*"
 flask-sqlalchemy = "*"
+psycopg2-binary = "*"
 
 [requires]
 python_version = "3.7"

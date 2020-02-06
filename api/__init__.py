@@ -13,7 +13,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 # initialize flask app
 APP = Flask(__name__)
-APP.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///my_db.sqlite"
+APP.config["SQLALCHEMY_DATABASE_URI"] = config("DATABASE_URL")
 
 # initialize dash, for visualizations
 DASH = Dash(
