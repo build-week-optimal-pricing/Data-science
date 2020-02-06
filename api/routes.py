@@ -9,6 +9,7 @@ import dash_core_components as dcc
 
 from api import APP, DASH
 from api.service import location_service
+from api.service import listing_service
 from api.service import price_service
 from api.service import plot_service
 
@@ -125,6 +126,11 @@ def estimate_price_form():
 @APP.route("/lookup-neighborhood-form")
 def lookup_neighborhood_form():
     return render_template("coords-form.html")
+
+@APP.route("/view-queries")
+def view_queries():
+    listings = listing_service.get_all_queries()
+    return render_template("listings.html", listings=listings)
 
 
 @APP.route("/css/<filename>")

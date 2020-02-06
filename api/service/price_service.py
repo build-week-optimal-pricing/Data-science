@@ -80,12 +80,12 @@ def estimate(
     listing = Listing(
         neighborhood=neighborhood,
         room_type=room_type,
-        min_nights=min_nights,
-        num_reviews=num_reviews,
-        listings_count=listings_count,
-        availability_365=availability_365,
-        last_review=last_review,
-        price=pred[0],
+        min_nights=min_nights if min_nights is not np.nan else None,
+        num_reviews=num_reviews if num_reviews is not np.nan else None,
+        listings_count=listings_count if listings_count is not np.nan else None,
+        availability_365=availability_365 if availability_365 is not np.nan else None,
+        last_review=last_review if last_review is not np.nan else None,
+        price=float(pred[0]),
     )
 
     DB.session.add(listing)
