@@ -1,0 +1,35 @@
+<html>
+    <header>
+        <title>
+            All Queries
+        </title>
+    </header>
+    {% for listing in listings %}
+    <div style="margin-bottom: 30px">
+        <p>
+        Neighborhood: {{ listing.neighborhood }}
+        </p>
+        <p>
+        Room type: {{ listing.room_type }}
+        </p>
+        <p>
+        minimum nights: {{ listing.min_nights }}
+        </p>
+        <p>
+        number of reviews: {{ listing.num_reviews }}
+        </p>
+        <p>
+        number of listings by owner: {{ listing.listings_count }}
+        </p>
+        <p>
+        days available per year: {{ listing.availability_365 }}
+        </p>
+        <p>
+        seconds since last review: {{ listing.last_review }}
+        </p>
+        <p><strong>
+        recommended price: {{ listing.price }}
+        </strong></p>
+    </div>
+    {% endfor %}
+</html>
