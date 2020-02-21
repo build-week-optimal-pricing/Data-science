@@ -1,5 +1,7 @@
 # Data-science
 
+This is the data science component of [the airprice app for optimizing AirBnB listings in Berlin](https://airprice.now.sh/protected).
+
 ### Endpoints
 
 The api currently lives at [optimalprice.stromsy.com](optimalprice.stromsy.com).
